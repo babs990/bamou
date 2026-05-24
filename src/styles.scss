@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary:   #E8720C;
+  --color-cream:     #F5F0E8;
+  --color-dark:      #1A1A1A;
+  --font-display:    "Outfit", sans-serif;
+  --font-body:       "Outfit", sans-serif;
+  --font-mono:       "Outfit", sans-serif;
+  --font-outfit : 'Outfit'
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-dark);
+  margin: 0;
+}

@@ -1,0 +1,6 @@
+<article>
+  <!-- TODO: image, nom, prix, étoiles, bouton commander -->
+  <p>{{ product.name }}</p>
+  <p>{{ product.price | number:'1.0-0' }} FCFA</p>
+  <button (click)="onOrder()">Commander</button>
+</article>

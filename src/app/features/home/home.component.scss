@@ -1,0 +1,220 @@
+// ═══════════════════════════════════════════════════════════
+// HERO — Bamou
+// Fond : vert sauge #C8C9A8 (Figma "Bamou 1")
+// ═══════════════════════════════════════════════════════════
+
+$sage:    #C7C8A9;   // fond hero Figma
+$orange:  #C4420D;   // CTA / accent
+$dark:    #1A1A1A;
+$white:   #ffffff;
+$font-display: 'Outfit', serif;
+$font-body:    'Outfit', sans-serif;
+
+// ── Section hero ───────────────────────────────────────────
+.hero {
+  background-color: $sage;
+  overflow: hidden;
+  position: relative;
+
+  // Grain subtil pour donner du caractère (optionnel)
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='1' height='1' fill='rgba(0,0,0,0.03)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+}
+
+.hero-inner {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 5rem 1.5rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: auto;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+  }
+}
+
+// ── Contenu texte ──────────────────────────────────────────
+.hero-content {
+  flex: 1;
+  max-width: 620px;
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+    order: 2;
+  }
+}
+
+.hero-title {
+  font-family: $font-display;
+  font-size: 48px;
+  font-weight: 700;
+  color: $dark;
+  line-height: 160%;
+  letter-spacing: -0.02em;
+  margin: 0 0 1.25rem;
+}
+
+.hero-text {
+  font-family: $font-body;
+  font-size: 18px;
+  line-height: 160%;
+  margin: 0 0 2rem;
+  max-width: 620px;
+
+  @media (max-width: 900px) {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+// ── Actions (CTA + socials) ────────────────────────────────
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 900px) {
+    justify-content: center;
+  }
+}
+
+.btn-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.6rem;
+  background-color: $orange;
+  color: $white;
+  font-family: $font-body;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: none;
+  border-radius: 50px;        // pill shape comme dans le Figma
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 18px rgba($orange, 0.35);
+  white-space: nowrap;
+
+  &:hover {
+    background-color: darken($orange, 8%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba($orange, 0.45);
+  }
+
+  &:active { transform: translateY(0); }
+}
+
+// ── Icônes sociales ────────────────────────────────────────
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: $orange;
+  color: $white;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background 0.18s, transform 0.15s;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: darken($orange, 10%);
+    transform: translateY(-2px);
+  }
+}
+
+// ── Visual droite ──────────────────────────────────────────
+.hero-visual {
+  position: relative;
+  flex-shrink: 0;
+  width: 420px;
+  height: 420px;
+
+  @media (max-width: 1100px) { width: 340px; height: 340px; }
+
+  @media (max-width: 900px) {
+    order: 1;
+    width: 260px;
+    height: 260px;
+  }
+
+  @media (max-width: 480px) {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+// Badge flottant "Profitez."
+.hero-badge {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  background: $white;
+  border-radius: 14px;
+  padding: 0.65rem 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  text-align: left;
+
+  .badge-title {
+    display: block;
+    font-family: $font-display;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $orange;
+  }
+
+  .badge-sub {
+    display: block;
+    font-family: $font-body;
+    font-size: 0.7rem;
+    color: rgba($dark, 0.6);
+    line-height: 1.4;
+    margin-top: 2px;
+  }
+
+  @media (max-width: 900px) { display: none; }
+}
+
+// Image wrapper — cercle avec fond blanc doux
+.hero-image-wrapper {
+
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+// Placeholder emoji si pas d'image
+.hero-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: clamp(4rem, 10vw, 8rem);
+}

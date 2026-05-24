@@ -1,0 +1,331 @@
+// ═══════════════════════════════════════════════════════════
+// NAVBAR BAMOU — styles
+// Couleurs extraites du Figma :
+//   fond hero  : #C8C9A8 (vert sauge clair)
+//   texte nav  : #1A1A1A
+//   accent     : #E8720C (orange)
+//   fond navbar: blanc / semi-transparent au scroll
+// ═══════════════════════════════════════════════════════════
+
+// ── Variables locales ──────────────────────────────────────
+$font-body:    'Outfit', sans-serif;
+$font-display: 'Outfit', serif;
+$orange:       #C4420D;
+$dark:         #1A1A1A;
+$gray:         #6B7280;
+$cream:        #F5F0E8;
+$fond:         #C7C8A9;
+$white:        #ffffff;
+
+// ── Header shell ──────────────────────────────────────────
+.navbar-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: $fond;
+  border-bottom: 1px;
+  border: #000000e8;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+
+  &.scrolled {
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.027);
+    border-bottom-color: rgba(0, 0, 0, 0.027);
+  }
+}
+
+// ── Inner container ────────────────────────────────────────
+.navbar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+// ── Logo ───────────────────────────────────────────────────
+.logo {
+  font-family: $font-display;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $dark;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+
+  .logo-accent { color: $orange; }
+
+  &:hover .logo-accent { opacity: 0.85; }
+}
+
+// ── Desktop nav ────────────────────────────────────────────
+.desktop-nav {
+  flex: 1;
+
+  ul {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // Cacher sur mobile
+  @media (max-width: 767px) { display: none; }
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.75rem;
+  font-family: $font-body;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: $dark;
+  text-decoration: none;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover {
+    color: $orange;
+    border-bottom: 1px;
+    border-bottom: #C4420D;
+  }
+
+  &.link-active {
+    color: $orange;
+    font-weight: 600;
+  }
+}
+
+// ── Chevron ────────────────────────────────────────────────
+.chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+
+  &.rotated { transform: rotate(180deg); }
+}
+
+// ── Dropdown ───────────────────────────────────────────────
+.catalog-dropdown { position: relative; }
+
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  min-width: 200px;
+  background: #C7C8A9;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 0.5rem;
+  animation: fadeDown 0.15s ease;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-family: $font-body;
+  font-size: 0.875rem;
+  color: $dark;
+  text-decoration: none;
+  transition: background 0.12s, color 0.12s;
+
+  &:hover {
+    background: rgba($orange, 0.07);
+    color: $orange;
+  }
+}
+
+.dropdown-icon {
+  font-size: 1rem;
+  width: 22px;
+  text-align: center;
+}
+
+// ── Tools (search + dark + hamburger) ─────────────────────
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.tool-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.65rem;
+  font-family: $font-body;
+  font-size: 0.875rem;
+  color: $dark;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+
+  svg { width: 18px; height: 18px; }
+
+  &:hover {
+    color: $dark;
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  &.icon-only { padding: 0.4rem; }
+
+  // Cacher le label "Recherche" sur petits écrans
+  .tool-label {
+    @media (max-width: 900px) { display: none; }
+  }
+}
+
+.separator {
+  width: 1px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.12);
+  margin: 0 0.25rem;
+}
+
+// ── Hamburger ─────────────────────────────────────────────
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.15s;
+
+  &:hover { background: rgba(0, 0, 0, 0.05); }
+
+  span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: $dark;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+
+    &:nth-child(1).open { transform: translateY(7px) rotate(45deg); }
+    &:nth-child(2).open { opacity: 0; transform: scaleX(0); }
+    &:nth-child(3).open { transform: translateY(-7px) rotate(-45deg); }
+  }
+
+  @media (max-width: 767px) { display: flex; }
+}
+
+// ═══════════════════════════════════════════════════════════
+// MOBILE DRAWER
+// ═══════════════════════════════════════════════════════════
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 98;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.mobile-drawer {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: $white;
+  padding: 1rem 1.5rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  animation: slideDown 0.22s ease;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: $font-body;
+  font-size: 1rem;
+  font-weight: 500;
+  color: $dark;
+  text-decoration: none;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+
+  &:hover { background: rgba($orange, 0.06); color: $orange; }
+  &.mobile-link-active { color: $orange; font-weight: 600; }
+}
+
+.mobile-dropdown-trigger {
+  width: 100%;
+  text-align: left;
+}
+
+.mobile-submenu {
+  list-style: none;
+  margin: 0.25rem 0 0 0;
+  padding: 0 0 0 1rem;
+  border-left: 2px solid rgba($orange, 0.2);
+}
+
+.mobile-sublink {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.75rem;
+  font-family: $font-body;
+  font-size: 0.9rem;
+  color: $gray;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.12s, background 0.12s;
+
+  &:hover { color: $orange; background: rgba($orange, 0.06); }
+}

@@ -1,0 +1,160 @@
+<!-- ═══════════════════════════════════════════════════════════
+     NAVBAR BAMOU
+     Desktop : logo | liens (Accueil, Catalogue↓, Contact) | Recherche | darkmode
+     Mobile  : logo | hamburger → drawer
+═══════════════════════════════════════════════════════════ -->
+<header
+  class="navbar-header font-outfit border-b-[1px] border-[#000000e8]"
+  [class.scrolled]="isScrolled()">
+
+  <div class="navbar-inner">
+
+    <!-- ── LOGO ─────────────────────────────────────────── -->
+    <a routerLink="/" class="logo" aria-label="Bamou — Accueil">
+      <img src="assets/images/bamou.svg" alt="">
+    </a>
+
+    <!-- ── DESKTOP LINKS ─────────────────────────────────── -->
+    <nav class="desktop-nav" aria-label="Navigation principale">
+      <ul>
+        <li>
+          <a routerLink="/"
+             routerLinkActive="link-active"
+             [routerLinkActiveOptions]="{ exact: true }"
+             class="nav-link">
+            Accueil
+          </a>
+        </li>
+
+        <!-- Catalogue dropdown -->
+        <li class="catalog-dropdown">
+          <button
+            class="nav-link dropdown-trigger"
+            (click)="toggleCatalog()"
+            [attr.aria-expanded]="catalogOpen()"
+            aria-haspopup="true">
+            Catalogue
+            <svg class="chevron" [class.rotated]="catalogOpen()"
+                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                    d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z"
+                    clip-rule="evenodd"/>
+            </svg>
+          </button>
+
+          <!-- Dropdown panel -->
+          @if (catalogOpen()) {
+            <div class="dropdown-panel" role="menu">
+              @for (item of catalogItems; track item.slug) {
+                <a
+                  [routerLink]="['/catalogue', item.slug]"
+                  (click)="closeCatalog()"
+                  class="dropdown-item"
+                  role="menuitem">
+                  <span class="dropdown-icon">{{ item.icon }}</span>
+                  {{ item.label }}
+                </a>
+              }
+            </div>
+          }
+        </li>
+
+        <li>
+          <a href="#contact" class="nav-link">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- ── TOOLS ─────────────────────────────────────────── -->
+    <div class="tools">
+
+      <!-- Recherche -->
+      <button class="tool-btn" aria-label="Rechercher">
+          <img src="assets/images/search.svg" alt="search">
+        <span class="tool-label">Recherche</span>
+      </button>
+
+      <!-- Séparateur -->
+      <span class="separator" aria-hidden="true"></span>
+
+      <!-- Dark mode -->
+      <button
+        class="tool-btn icon-only"
+        (click)="toggleDark()"
+        [attr.aria-label]="darkMode() ? 'Mode clair' : 'Mode sombre'">
+        @if (darkMode()) {
+          <!-- Soleil -->
+          <img src="assets/images/sun.svg" alt="sun">
+        } @else {
+          <!-- Lune -->
+          <img src="assets/images/moon.svg" alt="moon">
+        }
+      </button>
+
+      <!-- Hamburger (mobile) -->
+      <button
+        class="hamburger"
+        (click)="toggleMobile()"
+        [attr.aria-expanded]="mobileOpen()"
+        aria-label="Menu">
+        <span [class.open]="mobileOpen()"></span>
+        <span [class.open]="mobileOpen()"></span>
+        <span [class.open]="mobileOpen()"></span>
+      </button>
+    </div>
+  </div><!-- /navbar-inner -->
+
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MOBILE DRAWER
+═══════════════════════════════════════════════════════════ -->
+@if (mobileOpen()) {
+  <!-- Overlay -->
+  <div class="mobile-overlay" (click)="closeMobile()" aria-hidden="true"></div>
+
+  <!-- Drawer -->
+  <nav class="mobile-drawer" aria-label="Navigation mobile">
+    <ul>
+      <li>
+        <a routerLink="/"
+           routerLinkActive="mobile-link-active"
+           [routerLinkActiveOptions]="{ exact: true }"
+           class="mobile-link"
+           (click)="closeMobile()">
+          Accueil
+        </a>
+      </li>
+
+      <!-- Catalogue avec sous-items -->
+      <li>
+        <button class="mobile-link mobile-dropdown-trigger" (click)="toggleCatalog()">
+          Catalogue
+          <svg class="chevron" [class.rotated]="catalogOpen()"
+               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z"
+                  clip-rule="evenodd"/>
+          </svg>
+        </button>
+        @if (catalogOpen()) {
+          <ul class="mobile-submenu">
+            @for (item of catalogItems; track item.slug) {
+              <li>
+                <a [routerLink]="['/catalogue', item.slug]"
+                   class="mobile-sublink"
+                   (click)="closeMobile(); closeCatalog()">
+                  <span>{{ item.icon }}</span> {{ item.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        }
+      </li>
+
+      <li>
+        <a href="#contact" class="mobile-link" (click)="closeMobile()">Contact</a>
+      </li>
+    </ul>
+  </nav>
+}
