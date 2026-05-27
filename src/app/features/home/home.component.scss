@@ -144,8 +144,8 @@ $font-body:    'Outfit', sans-serif;
   transition: background 0.18s, transform 0.15s;
 
   svg {
-    width: 16px;
-    height: 16px;
+    width: 22px;
+    height: 22px;
   }
 
   &:hover {
@@ -219,3 +219,102 @@ $font-body:    'Outfit', sans-serif;
   object-position: top center;
 }
 
+// ═══════════════════════════════════════════════════════════
+// CATEGORIES SECTION
+// ═══════════════════════════════════════════════════════════
+
+$orange:    #C4420D;
+$dark:      #1A1A1A;
+$cream:     #F5F0E8;
+$font-display: 'Outfit', serif;
+$font-body:    'Outfit', sans-serif;
+
+.categories-section {
+  background: $cream;
+  padding: 3rem 0;
+}
+
+.section-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// ── En-tête ────────────────────────────────────────────────
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-family: $font-display;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: $dark;
+  margin: 0;
+}
+
+.section-nav {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.nav-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba($dark, 0.15);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+
+  svg { width: 16px; height: 16px; color: $dark; }
+
+  &:hover {
+    border-color: $orange;
+    background: rgba($orange, 0.06);
+    svg { color: $orange; }
+  }
+}
+
+// ── Grille ─────────────────────────────────────────────────
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+
+  // Tablette
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  // Mobile large
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+
+  // Mobile petit
+  @media (max-width: 380px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// ── Skeleton loader ────────────────────────────────────────
+.cat-skeleton {
+  height: 130px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, #e8e0d4 25%, #f0e8dc 50%, #e8e0d4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

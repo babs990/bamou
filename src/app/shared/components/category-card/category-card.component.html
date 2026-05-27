@@ -1,4 +1,20 @@
-<a [routerLink]="['/catalogue', category.slug]">
-  <!-- TODO: icône + label -->
-  <span>{{ category.label }}</span>
+<a [routerLink]="['/catalogue', category.slug]" class="cat-card">
+
+  <!-- Image produit représentatif -->
+  <div class="cat-image-wrapper">
+    <img
+      [src]="category.image"
+      [alt]="category.label"
+      class="cat-image"
+      loading="lazy"
+      onerror="this.src='assets/images/placeholder.png'">
+  </div>
+
+  <!-- Label -->
+  <span class="cat-label">{{ category.label }}</span>
+
+  <!-- Trait orange en bas (actif au hover) -->
+  <span class="cat-bar" aria-hidden="true"></span>
+
 </a>
+

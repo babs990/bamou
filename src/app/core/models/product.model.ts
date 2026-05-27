@@ -15,6 +15,6 @@ export interface Product {
 export interface Category {
   id: string;
   label: string;
-  icon: string;
   slug: string;
+  image: string;  // chemin asset ou URL API
 }
