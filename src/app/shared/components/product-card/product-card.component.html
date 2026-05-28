@@ -1,6 +1,59 @@
-<article>
-  <!-- TODO: image, nom, prix, étoiles, bouton commander -->
-  <p>{{ product.name }}</p>
-  <p>{{ product.price | number:'1.0-0' }} FCFA</p>
-  <button (click)="onOrder()">Commander</button>
+<article class="product-card">
+
+  <!-- Lien vers la fiche produit -->
+  <a [routerLink]="['/produit', product.id]" class="card-image-link" [attr.aria-label]="product.name">
+
+    <!-- Badge promo -->
+    @if (product.promoPercent) {
+      <span class="badge-promo">-{{ product.promoPercent }}%</span>
+    }
+
+    <!-- Badge nouveau -->
+    @if (product.isNew && !product.promoPercent) {
+      <span class="badge-new">Nouveau</span>
+    }
+
+    <!-- Image -->
+    <div class="card-image-wrapper">
+      <img
+        [src]="product.image"
+        [alt]="product.name"
+        class="card-image"
+        loading="lazy"
+        onerror="this.src='assets/images/placeholder.png'">
+    </div>
+  </a>
+
+  <!-- Infos -->
+  <div class="card-body">
+
+    <!-- Nom tronqué sur 2 lignes -->
+    <a [routerLink]="['/produit', product.id]" class="card-name">
+      {{ product.name }}
+    </a>
+
+    <!-- Étoiles + note -->
+    <div class="card-rating" [attr.aria-label]="'Note : ' + product.rating + ' sur 5'">
+      @for (star of stars; track star) {
+        <svg
+          class="star"
+          [class.star--filled]="star <= product.rating"
+          [class.star--half]="star > product.rating && star <= product.rating + 0.5"
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+        </svg>
+      }
+      <span class="rating-value">{{ product.rating }}</span>
+    </div>
+
+    <!-- Prix -->
+    <div class="card-price">
+      <span class="price-current">{{ product.price | number:'1.0-0' }} FCFA</span>
+      @if (product.oldPrice) {
+        <span class="price-old">{{ product.oldPrice | number:'1.0-0' }} FCFA</span>
+      }
+    </div>
+
+  </div>
+
 </article>

@@ -230,7 +230,7 @@ $font-display: 'Outfit', serif;
 $font-body:    'Outfit', sans-serif;
 
 .categories-section {
-  background: $cream;
+  background: #FEFCFB;
   padding: 3rem 0;
 }
 
@@ -254,6 +254,8 @@ $font-body:    'Outfit', sans-serif;
   font-weight: 700;
   color: $dark;
   margin: 0;
+  @media (max-width: 600px) { font-size: 16px; }
+
 }
 
 .section-nav {
@@ -317,4 +319,58 @@ $font-body:    'Outfit', sans-serif;
 @keyframes shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
+}
+
+// ═══════════════════════════════════════════════════════════
+// PRODUITS POPULAIRES
+// ═══════════════════════════════════════════════════════════
+
+.products-section {
+  background: #FEFCFB;
+  padding: 3rem 0;
+}
+
+// ── "Voir plus" lien ───────────────────────────────────────
+.voir-plus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Outfit';
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $dark;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    color: $orange;
+    svg { transform: translateX(4px); }
+  }
+}
+
+// ── Grille produits ────────────────────────────────────────
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 1100px) { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 800px)  { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 560px)  { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+}
+
+// ── Skeleton produit ───────────────────────────────────────
+.product-skeleton {
+  border-radius: 14px;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(90deg, #efefef 25%, #f8f8f8 50%, #efefef 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
 }

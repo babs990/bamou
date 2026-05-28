@@ -14,6 +14,8 @@ export class ProductCardComponent {
   @Input({ required: true }) product!: Product;
   @Output() order = new EventEmitter<Product>();
 
+  readonly stars = [1, 2, 3, 4, 5];
+
   onOrder(): void {
     this.order.emit(this.product);
   }
