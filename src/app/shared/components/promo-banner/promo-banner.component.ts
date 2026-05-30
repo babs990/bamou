@@ -9,8 +9,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './promo-banner.component.scss',
 })
 export class PromoBannerComponent {
-  @Input() label   = 'PROMO';
-  @Input() percent = 20;
+  @Input() label    = 'PROMO TABASKI';
+  @Input() percent  = 20;
   @Input() subtitle = 'SUR TOUS NOS PRODUITS';
-  @Input() emoji   = '🐑';
+  @Input() image    = 'assets/images/banners/promo-tabaski.png';
 }

@@ -1,1 +1,81 @@
-// TODO: styles promo banner
+$bamou:     #C4420D;
+$white:     #ffffff;
+$font-display: 'Playfair Display', serif;
+$font-body:    'DM Sans', sans-serif;
+
+.promo-banner {
+  position: relative;
+  display: block;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+  text-decoration: none;
+  background-color: #1B4332; // fallback si image pas chargée
+
+  &:hover .promo-bg-image { transform: scale(1.03); }
+  &:hover .promo-cta      { background: darken(#C4420D, 8%); }
+}
+
+.promo-bg-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.promo-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.promo-label {
+  font-family: $font-body;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: $white;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.2rem;
+}
+
+.promo-percent {
+  font-family: $font-display;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: $bamou;
+  line-height: 1;
+  margin: 0 0 0.3rem;
+  // Contour blanc pour lisibilité sur fond vert
+  -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+}
+
+.promo-subtitle {
+  font-family: $font-body;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: $white;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.85rem;
+}
+
+.promo-cta {
+  display: inline-block;
+  align-self: flex-start;
+  background: $bamou;
+  color: $white;
+  font-family: $font-body;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  transition: background 0.2s;
+}

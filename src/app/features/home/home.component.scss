@@ -374,3 +374,19 @@ $font-body:    'Outfit', sans-serif;
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 }
+
+// ── Bannières promo ────────────────────────────────────────
+.banners-section {
+  background: #FEFCFB;
+  padding: 2rem 0 3rem;
+}
+
+.banners-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}

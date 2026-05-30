@@ -1,6 +1,10 @@
-<div>
-  <!-- TODO: style bannière promo avec label, pourcentage, emoji -->
-  <p>{{ label }} — -{{ percent }}%</p>
-  <p>{{ subtitle }}</p>
-  <a routerLink="/catalogue">En profiter</a>
-</div>
+<a routerLink="/catalogue" class="promo-banner">
+
+  <!-- Image de fond / illustration -->
+  <img
+    [src]="image"
+    [alt]="label"
+    class="promo-bg-image"
+    onerror="this.style.display='none'">
+
+</a>
