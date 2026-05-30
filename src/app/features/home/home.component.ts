@@ -5,11 +5,12 @@ import { CategoryCardComponent } from '../../shared/components/category-card/cat
 import { PromoBannerComponent } from '../../shared/components/promo-banner/promo-banner.component';
 import { ProductService } from '../../core/services/product.service';
 import { Category, Product } from '../../core/models/product.model';
+import { RevealDirective } from '../../shared/directives/reveal.directive';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, ProductCardComponent, CategoryCardComponent, PromoBannerComponent],
+  imports: [RouterLink, ProductCardComponent, CategoryCardComponent, PromoBannerComponent,RevealDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

@@ -2,7 +2,7 @@
   <div class="hero-inner">
 
     <!-- ── CONTENU GAUCHE ─────────────────────────────────── -->
-    <div class="hero-content">
+    <div class="hero-content" appReveal [revealDelay]="0">
 
       <h1 class="hero-title">
         La technologie qui simplifie votre quotidien.
@@ -49,7 +49,7 @@
     </div>
 
     <!-- ── IMAGE DROITE ───────────────────────────────────── -->
-    <div class="hero-visual" aria-hidden="true">
+    <div class="hero-visual" aria-hidden="true" appReveal [revealDelay]="150">
       <!-- Image principale — remplace par ton asset Figma -->
       <div class="hero-image-wrapper">
         <img
@@ -66,11 +66,11 @@
 <!-- ═══════════════════════════════════════════════════════════
      CATEGORIES
 ═══════════════════════════════════════════════════════════ -->
-<section class="categories-section">
+<section class="categories-section" >
   <div class="section-inner">
 
     <!-- En-tête section -->
-    <div class="section-header">
+    <div class="section-header" appReveal [revealDelay]="0">
       <h2 class="section-title">Nos catégories</h2>
       <div class="section-nav" aria-label="Naviguer dans les catégories">
         <button class="nav-arrow" aria-label="Précédent">
@@ -97,7 +97,7 @@
 
     <!-- Grille catégories -->
     @if (!categoriesLoading) {
-      <div class="categories-grid">
+      <div class="categories-grid" appReveal [revealDelay]="100">
         @for (cat of categories; track cat.id) {
           <app-category-card [category]="cat" />
         }
@@ -114,7 +114,7 @@
   <div class="section-inner">
 
     <!-- En-tête -->
-    <div class="section-header">
+    <div class="section-header" appReveal [revealDelay]="0">
       <h2 class="section-title">Les produits les plus populaire</h2>
       <a routerLink="/catalogue" class="voir-plus">
         Voir plus
@@ -133,8 +133,13 @@
       </div>
     } @else {
       <div class="products-grid">
-        @for (product of popularProducts; track product.id) {
-          <app-product-card [product]="product" />
+        @for (product of popularProducts; track product.id;let i = $index) {
+          <app-product-card 
+          [product]="product" 
+          [product]="product"
+          appReveal
+          [revealDelay]="i * 80"
+          />
         }
       </div>
     }
@@ -147,7 +152,7 @@
 ═══════════════════════════════════════════════════════════ -->
 <section class="banners-section">
   <div class="section-inner">
-    <div class="banners-grid">
+    <div class="banners-grid"appReveal [revealDelay]="0" >
       <app-promo-banner
         image="assets/images/promo-tabaski.png" />
       <app-promo-banner
