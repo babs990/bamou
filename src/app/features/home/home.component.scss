@@ -363,7 +363,13 @@ $font-body:    'Outfit', sans-serif;
 
   @media (max-width: 1100px) { grid-template-columns: repeat(4, 1fr); }
   @media (max-width: 800px)  { grid-template-columns: repeat(3, 1fr); }
-  @media (max-width: 560px)  { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  @media (max-width: 560px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  
+    // Cache le 5e produit sur mobile
+    app-product-card:nth-child(5) { display: none; }
+  }  
 }
 
 // ── Skeleton produit ───────────────────────────────────────
