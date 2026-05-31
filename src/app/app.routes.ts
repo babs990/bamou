@@ -7,7 +7,7 @@ export const routes: Routes = [
       import('./features/home/home.component').then(m => m.HomeComponent),
     title: 'Bamou — Accueil',
   },
-  {
+{
     path: 'catalogue',
     loadComponent: () =>
       import('./features/catalog/catalog.component').then(m => m.CatalogComponent),

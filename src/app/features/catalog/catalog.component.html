@@ -1,4 +1,122 @@
-<!-- TODO: breadcrumb -->
-<!-- TODO: filtres et pills de catégories -->
-<!-- TODO: grille produits avec app-product-card -->
-<h1>Catalogue</h1>
+<div class="catalog-page">
+  <div class="catalog-inner">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <a routerLink="/" class="bc-link">Accueil</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">
+        {{ activeCategory ? activeCategoryLabel : 'Tous les produits' }}
+      </span>
+    </nav>
+
+    <!-- Toolbar : recherche + filtres -->
+    <div class="search-toolbar">
+
+      <!-- Barre de recherche -->
+      <div class="search-input-wrapper">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Rechercher un produit"
+          [(ngModel)]="query"
+          (ngModelChange)="onSearchInput()"
+          (keyup.enter)="runSearch()"
+          aria-label="Rechercher">
+        <button class="search-btn" (click)="runSearch()" aria-label="Lancer">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke-width="2.2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Filtre tri -->
+      <div class="filter-dropdown" [class.open]="sortOpen">
+        <button class="filter-btn" (click)="toggleSort()">
+          {{ activeSortLabel }}
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z"/>
+          </svg>
+        </button>
+        @if (sortOpen) {
+          <div class="filter-panel">
+            @for (opt of sortOptions; track opt.value) {
+              <button class="filter-item"
+                      [class.active]="sort === opt.value"
+                      (click)="setSort(opt.value)">
+                {{ opt.label }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Filtre catégorie -->
+      <div class="filter-dropdown" [class.open]="categoryOpen">
+        <button class="filter-btn" (click)="toggleCategory()">
+          {{ activeCategoryLabel }}
+          <svg class="chevron" xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z"/>
+          </svg>
+        </button>
+        @if (categoryOpen) {
+          <div class="filter-panel">
+            <button class="filter-item"
+                    [class.active]="activeCategory === ''"
+                    (click)="setCategory('')">
+              Toutes les catégories
+            </button>
+            @for (cat of categories; track cat.id) {
+              <button class="filter-item"
+                      [class.active]="activeCategory === cat.slug"
+                      (click)="setCategory(cat.slug)">
+                {{ cat.label }}
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+    </div>
+
+    <!-- Skeleton -->
+    @if (loading) {
+      <div class="products-grid">
+        @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+          <div class="product-skeleton"></div>
+        }
+      </div>
+
+    <!-- Aucun résultat -->
+    } @else if (products.length === 0) {
+      <div class="empty-state">
+        <p class="empty-icon">🔍</p>
+        <p class="empty-text">Aucun produit trouvé.</p>
+        <button class="empty-reset" (click)="resetAll()">
+          Réinitialiser les filtres
+        </button>
+      </div>
+
+    <!-- Grille -->
+    } @else {
+      <p class="results-count">
+        {{ products.length }} produit{{ products.length > 1 ? 's' : '' }}
+      </p>
+      <div class="products-grid">
+        @for (product of products; track product.id; let i = $index) {
+          <app-product-card
+            [product]="product"
+            appReveal
+            [revealDelay]="i * 50" />
+        }
+      </div>
+    }
+
+  </div>
+</div>

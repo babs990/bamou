@@ -65,43 +65,88 @@
       </ul>
     </nav>
 
-    <!-- ── TOOLS ─────────────────────────────────────────── -->
-    <div class="tools">
+<!-- ── TOOLS ─────────────────────────────────────────── -->
+<div class="tools">
 
-      <!-- Recherche -->
-      <button class="tool-btn" aria-label="Rechercher">
-          <img src="assets/images/search.svg" alt="search">
-        <span class="tool-label">Recherche</span>
-      </button>
+  <!-- Zone recherche -->
+  <div class="search-zone">
 
-      <!-- Séparateur -->
-      <span class="separator" aria-hidden="true"></span>
-
-      <!-- Dark mode -->
-      <button
-        class="tool-btn icon-only"
-        (click)="toggleDark()"
-        [attr.aria-label]="darkMode() ? 'Mode clair' : 'Mode sombre'">
-        @if (darkMode()) {
-          <!-- Soleil -->
-          <img src="assets/images/sun.svg" alt="sun">
-        } @else {
-          <!-- Lune -->
-          <img src="assets/images/moon.svg" alt="moon">
-        }
-      </button>
-
-      <!-- Hamburger (mobile) -->
-      <button
-        class="hamburger"
-        (click)="toggleMobile()"
-        [attr.aria-expanded]="mobileOpen()"
-        aria-label="Menu">
-        <span [class.open]="mobileOpen()"></span>
-        <span [class.open]="mobileOpen()"></span>
-        <span [class.open]="mobileOpen()"></span>
-      </button>
+    <!-- Barre input -->
+    <div class="search-bar">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
+           viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+      </svg>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Recherche"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearchInput()"
+        (keyup.enter)="submitSearch()"
+        autocomplete="off"
+        aria-label="Rechercher un produit" />
     </div>
+
+    <!-- Suggestions dropdown -->
+    @if (suggestVisible) {
+      <div class="suggestions-panel">
+        @for (product of suggestions; track product.id) {
+          <button class="suggestion-item" (click)="goToProduct(product)">
+            <img
+              [src]="product.image"
+              [alt]="product.name"
+              class="suggest-img"
+              onerror="this.src='assets/images/placeholder.png'">
+            <div class="suggest-info">
+              <span class="suggest-name">{{ product.name }}</span>
+              <span class="suggest-price">{{ product.price | number:'1.0-0' }} FCFA</span>
+            </div>
+          </button>
+        }
+        <!-- Voir tous les résultats -->
+        <button class="suggest-all" (click)="submitSearch()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11zM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9z" clip-rule="evenodd"/>
+          </svg>
+          Voir tous les résultats pour "{{ searchQuery }}"
+        </button>
+      </div>
+    }
+
+  </div>
+
+  <!-- Séparateur -->
+  <span class="separator" aria-hidden="true"></span>
+
+  <!-- Dark mode -->
+  <button
+    class="tool-btn icon-only"
+    (click)="toggleDark()"
+    [attr.aria-label]="darkMode() ? 'Mode clair' : 'Mode sombre'">
+    @if (darkMode()) {
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke-width="1.8" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 7a5 5 0 1 0 0 10A5 5 0 0 0 12 7z"/>
+      </svg>
+    } @else {
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.4212 6.38014C13.5421 6.38014 13.6124 6.29957 13.6321 6.189C13.9437 4.52186 13.9338 4.48157 15.6712 4.14043C15.7917 4.11986 15.8624 4.05986 15.8624 3.939C15.8624 3.80871 15.7917 3.74829 15.6712 3.72814C13.9338 3.37671 13.9441 3.34671 13.6321 1.67914C13.6124 1.56857 13.5421 1.48843 13.4212 1.48843C13.3012 1.48843 13.2404 1.56857 13.2207 1.67914C12.8992 3.34629 12.919 3.37629 11.1712 3.72814C11.0607 3.74829 10.9805 3.80871 10.9805 3.939C10.9805 4.05986 11.0611 4.11986 11.1712 4.14043C12.9292 4.48157 12.8992 4.52186 13.2207 6.189C13.2404 6.29957 13.3008 6.38014 13.4212 6.38014ZM18.2328 13.17C18.4137 13.17 18.544 13.0397 18.5641 12.8486C18.8958 10.1469 19.006 10.1066 21.7484 9.65443C21.9695 9.61457 22.0998 9.51386 22.0998 9.31286C22.0998 9.12214 21.9695 9.00171 21.7887 8.97171C19.006 8.49943 18.8958 8.47929 18.5641 5.77714C18.544 5.58643 18.4137 5.45571 18.2328 5.45571C18.0417 5.45571 17.9114 5.58643 17.8912 5.76728C17.5398 8.46943 17.4592 8.49943 14.6671 8.97171C14.4862 9.00171 14.3555 9.12214 14.3555 9.31286C14.3555 9.50357 14.4862 9.61457 14.6671 9.65443C17.4592 10.1066 17.56 10.1469 17.8912 12.8687C17.8991 12.953 17.9388 13.0311 18.0023 13.0871C18.0657 13.1431 18.1482 13.1728 18.2328 13.17ZM10.6792 22.512C14.3555 22.512 17.329 20.664 18.685 17.52C18.8654 17.088 18.805 16.7567 18.6147 16.5557C18.4338 16.3851 18.1325 16.3449 17.7704 16.4854C17.0174 16.7867 16.0934 16.9573 14.938 16.9573C10.4482 16.9573 7.55539 14.1549 7.55539 9.74529C7.55539 8.52986 7.78639 7.32471 8.09753 6.69171C8.29896 6.29014 8.27839 5.94857 8.10782 5.73771C7.9171 5.51657 7.57553 5.44629 7.10325 5.637C4.01968 6.89271 1.90039 10.107 1.90039 13.8639C1.90039 18.7556 5.4961 22.512 10.6792 22.512ZM10.6994 20.9859C6.41025 20.9859 3.42696 17.8616 3.42696 13.7434C3.42696 11.2123 4.6021 8.98243 6.47068 7.55614C6.22939 8.20886 6.08882 9.21343 6.08882 10.1777C6.08882 15.1196 9.50411 18.4346 14.5565 18.4346C15.4608 18.4346 16.2841 18.324 16.7058 18.1731C15.4501 19.911 13.2104 20.9859 10.6994 20.9859Z" fill="black"/>
+      </svg>
+    }
+  </button>
+
+  <!-- Hamburger mobile -->
+  <button class="hamburger" (click)="toggleMobile()"
+          [attr.aria-expanded]="mobileOpen()" aria-label="Menu">
+    <span [class.open]="mobileOpen()"></span>
+    <span [class.open]="mobileOpen()"></span>
+    <span [class.open]="mobileOpen()"></span>
+  </button>
+
+</div>
   </div><!-- /navbar-inner -->
 
 </header>
