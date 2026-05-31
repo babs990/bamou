@@ -406,3 +406,10 @@ $font-body:    'Outfit', sans-serif;
     grid-template-columns: 1fr;
   }
 }
+
+.nouveaute{
+  padding-bottom: 200px;
+  @media (max-width: 640px) {
+    padding-bottom: 100px;
+  }
+}

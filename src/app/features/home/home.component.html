@@ -162,8 +162,36 @@
 </section>
 
 
-<section>
-  <!-- TODO: Les nouveautés de la semaine -->
-</section>
+<!-- ═══════════════════════════════════════════════════════════
+     NOUVEAUTÉS DE LA SEMAINE
+═══════════════════════════════════════════════════════════ -->
+<section class="products-section products-section--cream nouveaute">
+  <div class="section-inner">
 
+    <div class="section-header" appReveal [revealDelay]="0">
+      <h2 class="section-title">Les nouveautés de la semaine</h2>
+      <a routerLink="/catalogue" class="voir-plus">
+        Voir plus
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10z" clip-rule="evenodd"/>
+        </svg>
+      </a>
+    </div>
+
+    @if (newArrivalsLoading) {
+      <div class="products-grid">
+        @for (i of [1,2,3,4,5]; track i) { <div class="product-skeleton"></div> }
+      </div>
+    } @else if (newArrivals.length === 0) {
+      <p class="empty-state">Aucune nouveauté pour le moment.</p>
+    } @else {
+      <div class="products-grid">
+        @for (product of newArrivals; track product.id; let i = $index) {
+          <app-product-card [product]="product" appReveal [revealDelay]="i * 80" />
+        }
+      </div>
+    }
+
+  </div>
+</section>
 
