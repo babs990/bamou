@@ -10,6 +10,7 @@ export interface Product {
   reviewCount: number;
   isNew?: boolean;
   promoPercent?: number;
+  stock?: number;        
 }
 
 export interface Category {

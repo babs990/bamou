@@ -1,18 +1,73 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
+import { RevealDirective } from '../../shared/directives/reveal.directive';
+import { ProductService } from '../../core/services/product.service';
+import { WhatsappService } from '../../core/services/whatsapp.service';
+import { Product } from '../../core/models/product.model';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [RouterLink, DecimalPipe, ProductCardComponent],
+  imports: [RouterLink, DecimalPipe, ProductCardComponent, RevealDirective],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
-export class ProductDetailComponent {
-  @Input({ required: true }) id!: string; // injecté via withComponentInputBinding()
+export class ProductDetailComponent implements OnInit {
 
-  // TODO: injecter ProductService et WhatsappService
-  // TODO: charger product par id et similar products
+  @Input({ required: true }) id!: string;
+
+  private productService  = inject(ProductService);
+  private whatsappService = inject(WhatsappService);
+
+  product:  Product | undefined;
+  similar:  Product[] = [];
+  loading = true;
+
+  // Index de l'image active dans les thumbnails
+  activeImg = signal(0);
+
+  // Simule plusieurs angles (même image pour l'instant)
+  get thumbnails(): string[] {
+    if (!this.product) return [];
+    return Array(6).fill(this.product.image);
+  }
+
+  get stockPercent(): number {
+    const s = this.product?.stock ?? 0;
+    return Math.min(100, Math.round((s / 20) * 100));
+  }
+
+  get stockColor(): string {
+    const p = this.stockPercent;
+    if (p <= 25) return '#E53E3E';  // rouge
+    if (p <= 60) return '#C4420D';  // orange Bamou
+    return '#2D6A4F';               // vert
+  }
+
+  readonly stars = [1, 2, 3, 4, 5];
+
+  ngOnInit(): void {
+    const numId = Number(this.id);
+    if (!Number.isInteger(numId) || numId <= 0) return;
+
+    this.productService.getById(numId).subscribe(p => {
+      this.product = p;
+      this.loading = false;
+      if (p) {
+        this.productService.getByCategory(p.category).subscribe(all => {
+          this.similar = all.filter(x => x.id !== p.id);
+        });
+      }
+    });
+  }
+
+  setActiveImg(index: number): void {
+    this.activeImg.set(index);
+  }
+
+  order(): void {
+    if (this.product) this.whatsappService.order(this.product);
+  }
 }
