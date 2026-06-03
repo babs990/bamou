@@ -39,34 +39,46 @@
               class="main-image"
               onerror="this.src='assets/images/placeholder.png'">
           </div>
-
-          <!-- Thumbnails -->
+          
           <div class="thumbnails">
-            <button class="thumb-nav" aria-label="Précédent"
-                    (click)="setActiveImg(activeImg() > 0 ? activeImg() - 1 : thumbnails.length - 1)">
+          
+            <!-- Flèche gauche -->
+            <button
+              class="thumb-nav"
+              [disabled]="thumbStart() === 0"
+              (click)="prevThumbs()"
+              aria-label="Précédent">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0z" clip-rule="evenodd"/>
               </svg>
             </button>
-
+          
+            <!-- Thumbs visibles -->
             <div class="thumbs-track">
-              @for (thumb of thumbnails; track $index) {
+              @for (thumb of visibleThumbs; track thumb.index) {
                 <button
                   class="thumb"
-                  [class.active]="activeImg() === $index"
-                  (click)="setActiveImg($index)">
-                  <img [src]="thumb" [alt]="product.name + ' vue ' + ($index + 1)"
-                       onerror="this.src='assets/images/placeholder.png'">
+                  [class.active]="activeImg() === thumb.index"
+                  (click)="setActiveImg(thumb.index)">
+                  <img
+                    [src]="thumb.src"
+                    [alt]="product!.name + ' vue ' + (thumb.index + 1)"
+                    onerror="this.src='assets/images/placeholder.png'">
                 </button>
               }
             </div>
-
-            <button class="thumb-nav" aria-label="Suivant"
-                    (click)="setActiveImg(activeImg() < thumbnails.length - 1 ? activeImg() + 1 : 0)">
+          
+            <!-- Flèche droite -->
+            <button
+              class="thumb-nav"
+              [disabled]="thumbStart() + VISIBLE >= thumbnails.length"
+              (click)="nextThumbs()"
+              aria-label="Suivant">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06z" clip-rule="evenodd"/>
               </svg>
             </button>
+          
           </div>
         </div>
 

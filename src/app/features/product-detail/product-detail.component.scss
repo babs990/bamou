@@ -63,11 +63,11 @@ $font-mono:    'Outfit', monospace;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 2rem;
-  border: 1px solid rgba(0,0,0,0.06);
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.067);
 
   @media (max-width: 900px) {
-    padding: 1rem;
+    padding: 0;
     border-radius: 14px;
   }
 }
@@ -82,44 +82,51 @@ $font-mono:    'Outfit', monospace;
   &:hover { transform: scale(1.04); }
 }
 
-// Thumbnails
 .thumbnails {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .thumb-nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   width: 28px;
   height: 28px;
   border-radius: 50%;
   border: 1.5px solid rgba($dark, 0.15);
   background: $white;
   cursor: pointer;
-  flex-shrink: 0;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, opacity 0.15s;
 
   svg { width: 14px; height: 14px; color: $dark; }
-  &:hover { border-color: $bamou; svg { color: $bamou; } }
+
+  &:hover:not(:disabled) {
+    border-color: $bamou;
+    svg { color: $bamou; }
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
 }
 
 .thumbs-track {
   display: flex;
   gap: 0.5rem;
-  overflow-x: auto;
   flex: 1;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
+  min-width: 0; // empêche le débordement
 }
 
 .thumb {
-  flex-shrink: 0;
-  width: 58px;
-  height: 58px;
-  border-radius: 12px;
+  flex: 1;           // chaque thumb prend une part égale
+  min-width: 0;      // empêche le débordement
+  aspect-ratio: 1/1;
+  border-radius: 10px;
   border: 2px solid transparent;
   background: #F8F8F8;
   padding: 4px;
@@ -133,8 +140,12 @@ $font-mono:    'Outfit', monospace;
     object-fit: contain;
   }
 
-  &.active  { border-color: $bamou; }
-  &:hover:not(.active) { border-color: rgba($bamou, 0.4); }
+  &.active              { border-color: $bamou; }
+  &:hover:not(.active)  { border-color: rgba($bamou, 0.4); }
+
+  // Réduction progressive
+  @media (max-width: 900px) { border-radius: 8px; padding: 3px; }
+  @media (max-width: 480px) { border-radius: 6px; padding: 2px; }
 }
 
 // ── Infos ──────────────────────────────────────────────

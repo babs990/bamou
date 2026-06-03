@@ -27,11 +27,31 @@ export class ProductDetailComponent implements OnInit {
 
   // Index de l'image active dans les thumbnails
   activeImg = signal(0);
-
-  // Simule plusieurs angles (même image pour l'instant)
+  
+  // Simule 5 images par produit (même image pour l'instant, à remplacer par product.images[])
   get thumbnails(): string[] {
     if (!this.product) return [];
-    return Array(6).fill(this.product.image);
+    return Array(5).fill(this.product.image);
+  }
+  
+  // Index de la première thumb visible dans la fenêtre
+  thumbStart = signal(0);
+  readonly VISIBLE = 5; // nb de thumbs visibles à la fois
+  
+  get visibleThumbs(): { src: string; index: number }[] {
+    return this.thumbnails
+      .slice(this.thumbStart(), this.thumbStart() + this.VISIBLE)
+      .map((src, i) => ({ src, index: this.thumbStart() + i }));
+  }
+  
+  prevThumbs(): void {
+    if (this.thumbStart() > 0)
+      this.thumbStart.update(v => v - 1);
+  }
+  
+  nextThumbs(): void {
+    if (this.thumbStart() + this.VISIBLE < this.thumbnails.length)
+      this.thumbStart.update(v => v + 1);
   }
 
   get stockPercent(): number {
