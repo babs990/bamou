@@ -5,7 +5,7 @@ import { Product } from '../models/product.model';
 export class WhatsappService {
 
   // ← Remplace par ton vrai numéro (format international sans +)
-  private readonly number = '221XXXXXXXXX';
+  private readonly number = '221778724536';
 
   order(product: Product): void {
     const name  = this.sanitize(product.name);

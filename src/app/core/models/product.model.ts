@@ -10,7 +10,8 @@ export interface Product {
   reviewCount: number;
   isNew?: boolean;
   promoPercent?: number;
-  stock?: number;        
+  stock?: number;       // quantité restante
+  stockTotal?: number;  // stock initial total
 }
 
 export interface Category {

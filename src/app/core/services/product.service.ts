@@ -34,7 +34,7 @@ private readonly MOCK_PRODUCTS: Product[] = [
     rating: 4.5,
     reviewCount: 48,
     isNew: false,
-    stock: 12,
+    stock: 4, stockTotal: 12,
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ private readonly MOCK_PRODUCTS: Product[] = [
     rating: 4.5,
     reviewCount: 31,
     isNew: false,
-    stock: 5,
+    stock: 4, stockTotal: 12,
   },
   {
     id: 3,
@@ -58,7 +58,7 @@ private readonly MOCK_PRODUCTS: Product[] = [
     rating: 4.3,
     reviewCount: 22,
     isNew: false,
-    stock: 20,
+    stock: 4, stockTotal: 12,
   },
   {
     id: 4,
@@ -72,7 +72,7 @@ private readonly MOCK_PRODUCTS: Product[] = [
     rating: 4.6,
     reviewCount: 64,
     isNew: false,
-    stock: 3,
+    stock: 4, stockTotal: 12,
   },
   {
     id: 5,
@@ -84,7 +84,7 @@ private readonly MOCK_PRODUCTS: Product[] = [
     rating: 4.7,
     reviewCount: 37,
     isNew: true,
-    stock: 8,
+    stock: 4, stockTotal: 12,
   },
   {
     id: 6,
@@ -98,7 +98,7 @@ private readonly MOCK_PRODUCTS: Product[] = [
     rating: 4.8,
     reviewCount: 55,
     isNew: true,
-    stock: 15,
+    stock: 4, stockTotal: 12,
   },
 ];
   // ── Catégories ──────────────────────────────────────────

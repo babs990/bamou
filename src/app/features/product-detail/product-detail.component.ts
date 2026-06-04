@@ -55,15 +55,14 @@ export class ProductDetailComponent implements OnInit {
   }
 
   get stockPercent(): number {
-    const s = this.product?.stock ?? 0;
-    return Math.min(100, Math.round((s / 20) * 100));
+    const remaining = this.product?.stock      ?? 0;
+    const total     = this.product?.stockTotal ?? 0;
+    if (total === 0) return 0;
+    return Math.round((remaining / total) * 100);
   }
 
   get stockColor(): string {
-    const p = this.stockPercent;
-    if (p <= 25) return '#E53E3E';  // rouge
-    if (p <= 60) return '#C4420D';  // orange Bamou
-    return '#2D6A4F';               // vert
+    return '#C4420D';
   }
 
   readonly stars = [1, 2, 3, 4, 5];
@@ -88,6 +87,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   order(): void {
-    if (this.product) this.whatsappService.order(this.product);
+  if (this.product) {
+    this.whatsappService.order(this.product);
   }
+}
 }
