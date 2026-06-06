@@ -159,47 +159,52 @@
   <div class="mobile-overlay" (click)="closeMobile()" aria-hidden="true"></div>
 
   <!-- Drawer -->
-  <nav class="mobile-drawer" aria-label="Navigation mobile">
-    <ul>
-      <li>
-        <a routerLink="/"
-           routerLinkActive="mobile-link-active"
-           [routerLinkActiveOptions]="{ exact: true }"
-           class="mobile-link"
-           (click)="closeMobile()">
-          Accueil
-        </a>
-      </li>
+<nav class="mobile-drawer" aria-label="Navigation mobile">
+  <ul>
+    <li>
+      <a routerLink="/"
+         routerLinkActive="mobile-link-active"
+         [routerLinkActiveOptions]="{ exact: true }"
+         class="mobile-link"
+         (click)="mobileOpen.set(false)">
+        Accueil
+      </a>
+    </li>
 
-      <!-- Catalogue avec sous-items -->
-      <li>
-        <button class="mobile-link mobile-dropdown-trigger" (click)="toggleCatalog()">
-          Catalogue
-          <svg class="chevron" [class.rotated]="catalogOpen()"
-               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z"
-                  clip-rule="evenodd"/>
-          </svg>
-        </button>
-        @if (catalogOpen()) {
-          <ul class="mobile-submenu">
-            @for (item of catalogItems; track item.slug) {
-              <li>
-                <a [routerLink]="['/catalogue', item.slug]"
-                   class="mobile-sublink"
-                   (click)="closeMobile(); closeCatalog()">
-                  <span>{{ item.icon }}</span> {{ item.label }}
-                </a>
-              </li>
-            }
-          </ul>
-        }
-      </li>
+    <li>
+      <button class="mobile-link mobile-dropdown-trigger" (click)="toggleCatalog()">
+        Catalogue
+        <svg class="chevron" [class.rotated]="catalogOpen()"
+             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd"
+                d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06z"
+                clip-rule="evenodd"/>
+        </svg>
+      </button>
 
-      <li>
-        <a href="#contact" class="mobile-link" (click)="closeMobile()">Contact</a>
-      </li>
-    </ul>
-  </nav>
+      @if (catalogOpen()) {
+        <ul class="mobile-submenu">
+          @for (item of catalogItems; track item.slug) {
+            <li>
+              <a href=""
+                [routerLink]="['/catalogue', item.slug]"
+                class="mobile-sublink"
+                (click)="mobileOpen.set(false); catalogOpen.set(false)">
+                <span>{{ item.icon }}</span> {{ item.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      }
+    </li>
+
+    <li>
+      <a href="#contact"
+         class="mobile-link"
+         (click)="mobileOpen.set(false)">
+        Contact
+      </a>
+    </li>
+  </ul>
+</nav>
 }

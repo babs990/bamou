@@ -16,16 +16,16 @@ $font-mono: 'Outfit', monospace;
 .product-card {
   display: flex;
   flex-direction: column;
+  height: 100%; // ← prend toute la hauteur de la cellule grid
   background: $white;
   border-radius: 14px;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-
     .card-image { transform: scale(1.04); }
   }
 }
@@ -89,7 +89,7 @@ $font-mono: 'Outfit', monospace;
   flex: 1;
 }
 
-// ── Nom ────────────────────────────────────────────────
+// Nom
 .card-name {
   font-family: $font-body;
   font-size: 0.82rem;
