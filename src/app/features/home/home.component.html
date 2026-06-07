@@ -72,13 +72,13 @@
     <!-- En-tête section -->
     <div class="section-header" appReveal [revealDelay]="0">
       <h2 class="section-title">Nos catégories</h2>
-      <div class="section-nav" aria-label="Naviguer dans les catégories">
-        <button class="nav-arrow" aria-label="Précédent">
+      <div class="section-nav">
+        <button class="nav-arrow" [disabled]="!canPrevCat" (click)="prevCat()" aria-label="Précédent">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0z" clip-rule="evenodd"/>
           </svg>
         </button>
-        <button class="nav-arrow" aria-label="Suivant">
+        <button class="nav-arrow" [disabled]="!canNextCat" (click)="nextCat()" aria-label="Suivant">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06z" clip-rule="evenodd"/>
           </svg>
@@ -96,13 +96,18 @@
     }
 
     <!-- Grille catégories -->
-    @if (!categoriesLoading) {
+    @if (categoriesLoading) {
+      <div class="categories-grid">
+        @for (i of [1,2,3,4,5,6]; track i) { <div class="cat-skeleton"></div> }
+      </div>
+    } @else {
       <div class="categories-grid" appReveal [revealDelay]="100">
-        @for (cat of categories; track cat.id) {
+        @for (cat of visibleCategories; track cat.id) {
           <app-category-card [category]="cat" />
         }
       </div>
     }
+
 
   </div>
 </section>
@@ -156,7 +161,7 @@
       <app-promo-banner
         image="assets/images/promo-tabaski.png" />
       <app-promo-banner
-        image="assets/images/promo-tabaski.png" />
+        image="assets/images/livraison.png" />
     </div>
   </div>
 </section>

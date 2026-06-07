@@ -292,6 +292,12 @@ $font-body:    'Outfit', sans-serif;
     background: rgba($orange, 0.06);
     svg { color: $orange; }
   }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+    &:hover { border-color: rgba($dark, 0.15); }
+  }
 }
 
 // ── Grille ─────────────────────────────────────────────────

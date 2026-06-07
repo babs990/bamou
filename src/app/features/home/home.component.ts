@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit {
   categories:       Category[] = [];
   popularProducts:  Product[]  = [];
   newArrivals:      Product[]  = [];
+  readonly CATS_PER_PAGE = 6;
+  catPage = 0;
 
   categoriesLoading   = true;
   popularLoading      = true;
@@ -58,4 +60,16 @@ export class HomeComponent implements OnInit {
       error: ()   => { this.newArrivalsLoading = false; },
     });
   }
+
+  get visibleCategories(): Category[] {
+    const start = this.catPage * this.CATS_PER_PAGE;
+    return this.categories.slice(start, start + this.CATS_PER_PAGE);
+  }
+  
+  get canPrevCat(): boolean { return this.catPage > 0; }
+  get canNextCat(): boolean { return (this.catPage + 1) * this.CATS_PER_PAGE < this.categories.length; }
+  
+  prevCat(): void { if (this.canPrevCat) this.catPage--; }
+  nextCat(): void { if (this.canNextCat) this.catPage++; }
+
 }

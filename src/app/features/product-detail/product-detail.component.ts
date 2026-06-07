@@ -31,7 +31,10 @@ export class ProductDetailComponent implements OnInit {
   // Simule 5 images par produit (même image pour l'instant, à remplacer par product.images[])
   get thumbnails(): string[] {
     if (!this.product) return [];
-    return Array(5).fill(this.product.image);
+    // Utilise images[] si disponible, sinon répète l'image principale
+    return this.product.images?.length
+      ? this.product.images
+      : Array(5).fill(this.product.image);
   }
   
   // Index de la première thumb visible dans la fenêtre
