@@ -17,6 +17,7 @@ $font-mono: 'Outfit', monospace;
   display: flex;
   flex-direction: column;
   height: 100%; // ← prend toute la hauteur de la cellule grid
+  width: 100%;
   background: $white;
   border-radius: 14px;
   overflow: hidden;
