@@ -6,6 +6,7 @@ import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { ProductService } from '../../core/services/product.service';
 import { WhatsappService } from '../../core/services/whatsapp.service';
 import { Product } from '../../core/models/product.model';
+import { MetaPixelService } from '../../core/services/meta-pixel.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -20,6 +21,7 @@ export class ProductDetailComponent implements OnInit {
 
   private productService  = inject(ProductService);
   private whatsappService = inject(WhatsappService);
+  private metaPixel = inject(MetaPixelService);
 
   product:  Product | undefined;
   similar:  Product[] = [];
@@ -83,6 +85,22 @@ export class ProductDetailComponent implements OnInit {
         });
       }
     });
+
+    this.productService.getById(numId).subscribe(p => {
+    this.product = p;
+    this.loading = false;
+    if (p) {
+      // ← tracker la vue produit
+      this.metaPixel.viewContent({
+        id:       p.id,
+        name:     p.name,
+        price:    p.price,
+        category: p.category,
+      });
+      // ...similaires...
+    }
+  });
+
   }
 
   setActiveImg(index: number): void {
@@ -91,6 +109,12 @@ export class ProductDetailComponent implements OnInit {
 
   order(): void {
   if (this.product) {
+        // ← tracker le clic commander
+    this.metaPixel.initiateCheckout({
+      id:    this.product.id,
+      name:  this.product.name,
+      price: this.product.price,
+    });
     this.whatsappService.order(this.product);
   }
 }

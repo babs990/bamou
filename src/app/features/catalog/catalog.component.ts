@@ -6,6 +6,7 @@ import { ProductService } from '../../core/services/product.service';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 import { Product, Category } from '../../core/models/product.model';
+import { MetaPixelService } from '../../core/services/meta-pixel.service';
 
 @Component({
   selector: 'app-catalog',
@@ -23,6 +24,8 @@ export class CatalogComponent implements OnInit {
   private productService = inject(ProductService);
   private route          = inject(ActivatedRoute);
   private router         = inject(Router);
+  private metaPixel = inject(MetaPixelService);
+
 
   query          = '';
   sort: SortFilter = 'all';
@@ -73,6 +76,10 @@ export class CatalogComponent implements OnInit {
   
   runSearch(): void {
     this.loading = true;
+    // ← tracker si mot-clé saisi
+    if (this.query.trim()) {
+      this.metaPixel.search(this.query.trim());
+    }
     this.searchService.search(this.query, this.sort, this.activeCategory).subscribe(result => {
       this.products = result.products;
       this.loading  = false;
