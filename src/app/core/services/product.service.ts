@@ -122,8 +122,8 @@ private readonly MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 7,
-    name: 'Coque iphone 13 simple',
-    description: 'Pochette pour iphone 3d avec ours souriant et Protection de caméra derrière pour iphone 13 simple. Couleur:Noir,Beige,Marron clair',
+    name: 'Coque iphone fds',
+    description: 'Pochette pour iphone 3d avec ours souriant et Protection de caméra derrière pour iphone 13 simple,13 pro, 14plus, 14pro. Couleur:Noir,Beige,Marron clair',
     price: 4000,
     oldPrice : 6000 ,
     image: 'assets/images/coque-iphone.jpg',
